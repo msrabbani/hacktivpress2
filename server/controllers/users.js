@@ -5,7 +5,7 @@ const salt = bcrypt.genSaltSync(8);
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
-const key = process.env.KEY_SCRT;
+const keyz = process.env.KEY_SCRT;
 
 function createUser(req,res){
   var hash = bcrypt.hashSync(req.body.password, salt);
@@ -72,20 +72,20 @@ function updateUser (req,res){
   })
 }
 
-function signin(req,res){
-  User.findOne({email:req.body.email}).then(dataUser => {
-    console.log('==>>',dataUser._id);
+function signin(req, res) {
+  model.findOne({email:req.body.email}).then(dataUser => {
+    // console.log('==>>',dataUser);
         if (bcrypt.compareSync(req.body.password, dataUser.password)) {
-           let token = jwt.sign({email: dataUser.email, role: dataUser.role, userid: dataUser._id}, key, {expiresIn:'1h'})
+           let token = jwt.sign({email: dataUser.email, userid: dataUser._id}, keyz, {expiresIn:'1h'})
            console.log('success');
-           res.send({user_id: dataUser._id, username: dataUser.username, token: token})
+           res.send({user_id: dataUser._id, user_name: dataUser.name, token: token})
       } else {
         console.log('failed');
         res.send('wrong password')
       }
-  }).catch(error=>{
-    console.log('error');
+  }).catch(error => {
     res.send(error)
+    console.log('error');
   })
 }
 
