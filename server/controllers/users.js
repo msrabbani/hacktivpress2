@@ -73,8 +73,8 @@ function updateUser (req,res){
 }
 
 function signin(req, res) {
-  model.findOne({email:req.body.email}).then(dataUser => {
-    // console.log('==>>',dataUser);
+  User.findOne({email:req.body.email}).then(dataUser => {
+    console.log('==>>',dataUser);
         if (bcrypt.compareSync(req.body.password, dataUser.password)) {
            let token = jwt.sign({email: dataUser.email, userid: dataUser._id}, keyz, {expiresIn:'1h'})
            console.log('success');
@@ -85,7 +85,7 @@ function signin(req, res) {
       }
   }).catch(error => {
     res.send(error)
-    console.log('error');
+    console.log('====>>error');
   })
 }
 
