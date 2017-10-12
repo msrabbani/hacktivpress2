@@ -3,7 +3,7 @@ const author = require('../helpers/authorisation')
 var express = require('express');
 var router = express.Router();
 
-router.get('/', author.authUser, Contr.getAllArticle)
+router.get('/', Contr.getAllArticle)
 router.post('/', author.authUser ,Contr.createArticle)
 router.get('/:id', author.authUser, Contr.getSingleArticle)
 // router.get('/:author', Contr.getByAuthor)
